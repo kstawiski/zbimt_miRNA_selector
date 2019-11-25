@@ -3,22 +3,27 @@ library(caret)
 
 #vote on the best number of features
 
-#' Iterated Recursive Feature Elimination - find optimal feature subset by performing recursive feature elimination to selected range of feature num
+#' Iterated Recursive Feature Elimination
 #'
-#' @param trainSet Dataframe used for training Random Forrest cassifier
-#' @param testSet Dataframe used for Random Forrest testing - calculating accuracy. Not used if useCV == T. Must have the same column names as trainSet
+#' For each possible size of optimal feature subset (OFS) performs multiple interations of RFE algorithm, using random forest as a classifier and accuracy as a performance metrics.
+#' Each iteration 'votes' on the features it has selected.
+#' For every N considered as possible OFS size, N features with top votes number are selected
+#'
+#'
+#' @param trainSet Dataframe used for Random Forrest cassifier training
+#' @param testSet Dataframe used for Random Forrest testing - accuracy calculation. Not used if useCV == T. Must have the same column names as trainSet
 #' @param initFeatures A vector containing a subset of trainSet column names to choose optmial features from
 #' @param classLab A name of trainSet column containing class variable
-#' @param checkNFeatures Number of features to consider (the algorithm will select optimal number of features considering 1:checkNFeatures options)
-#' @param votingIterations A number of times RFE algorithm will be iterated with other, random hyperparameters
+#' @param checkNFeatures Range of possible OFS sizes to consider (the algorithm will consider 1:checkNFeatures sizes)
+#' @param votingIterations A number of times RFE algorithm will be iterated, each time with different, random hyperparameters
 #' @param useCV Whether to use a cross validation (T) or Test set (F) for accuracy evaluation
 #' @param nfolds Number of folds to use for cross validation (Used only if useCV == T)
-#' @param initRandomState Initial random state to use for model hyperparameters drawing
+#' @param initRandomState Initial random state to use for model hyperparameters selection
 #'
 #' @return Returns a list containing three elements:
-#' 'accuracyPerNFeatures' - a dataframe containing average model accuracy for 1:N features selected
-#' 'votesPerN'- a Dataframe containing 'voting results' for each number of final features selected
-#' 'topFeaturesPerN' - a list containing selected features for each number (1:N) of final features
+#' 'accuracyPerNFeatures' - a dataframe containing average model accuracy for each of 1:checkNFeatures OFS sizes
+#' 'votesPerN'- a Dataframe containing 'voting results' for each OFS size
+#' 'topFeaturesPerN' - a list containing OFS for each (1:checkNFeatures) OFS size
 #' @export
 #'
 #' @examples
