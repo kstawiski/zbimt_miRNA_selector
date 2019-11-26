@@ -1,11 +1,11 @@
 Package: miRNAselector
 Type: Package
-Title: What the Package Does (Title Case)
+Title: miRNA selection for classifier induction based on miRNA-seq data.
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Author: Konrad Stawiski, Marcin Kaszkowiak
+Maintainer: Konrad Stawiski <konrad@konsta.com.pl>
+Description: Features:
+ - 
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
